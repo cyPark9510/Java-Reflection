@@ -20,7 +20,6 @@
    	대표적인 사용 예로 스프링의 DI(Dependency Injection), Proxy, ModelMapper 등이 있다.
 
 ```java
-@Controller
 public class UserController {    
 
 	@PostMapping("/user/join")
@@ -28,7 +27,7 @@ public class UserController {
 		...
 	}
 
-    @PostMapping("/user/login")
+    	@PostMapping("/user/login")
 	public String login(LoginDto dto) {
 		...
 	}
@@ -44,15 +43,23 @@ public class UserController {
 ## How?
 
 ```java
-class User{
-	private int id;
-	private String username;
-	private String password;
-	private String email;
+public class UserController {    
+
+	@PostMapping("/user/join")
+	public String join(JoinDto dto) {
+		...
+	}
+
+    	@PostMapping("/user/login")
+	public String login(LoginDto dto) {
+		...
+	}
+
+	...
 }
 ```
 
-User 클래스의 필드 정보를 Reflection을 이용한다면
+UserController 클래스의 매소드 정보를 Reflection을 이용한다면
 
 ```java
 Method[] methods = userController.getClass().getDeclaredMethods();  // userController 클래스의 매소드만 가져온다.
@@ -70,6 +77,21 @@ for (Method method : methods) {
 /user/join
 /user/login
 ...
+```
+
+UserController 클래스의 login parameters 정보를 Reflection을 이용한다면
+
+```java
+Parameter[] params = method.getParameters();
+
+for(Parameter param : params){
+	System.out.println(param.getType());
+}
+```
+
+```
+username
+password
 ```
 
 ## 주의 사항
